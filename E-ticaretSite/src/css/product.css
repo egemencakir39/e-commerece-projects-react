@@ -1,0 +1,96 @@
+.image {
+    max-width: 180px;
+    max-height: 230px;
+    object-fit: contain;
+}
+
+.card {
+
+    border: 1rem;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 1px 4px 3px lightgrey;
+    border: 1px rgb(173, 173, 173) solid;
+    border-radius: 5px;
+}
+
+.card:hover {
+    border: 1px rgb(212, 210, 210) solid;
+    transition: .3s;
+}
+
+.text {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.category {
+    margin-top: 5px;
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.title {
+    margin-top: 5px;
+    height: 70px;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 230px;
+    width: 100%;
+    text-align: center;
+}
+
+.subElements {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px;
+}
+
+.subElements button {
+    padding: 7px;
+    background-color: white;
+    color: rgb(124, 124, 124);
+    border: none;
+    outline: none;
+    border: 1px rgb(124, 124, 124) solid;
+
+}
+
+.subElements button:hover {
+    border: 1px rgb(2, 138, 9) solid;
+    color: rgb(2, 138, 9);
+    transition: all ease 0.3s;
+}
+
+.subElements .icon2 {
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    position: relative;
+    top: 2px
+}
+
+.rate {
+    display: flex;
+    justify-content: left;
+    margin-left: 7px;
+}
+
+.allBtn {
+    all: unset;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+}
+
+.allDiv {
+    margin: 15px;
+    width: 220px;
+    height: 420px;
+}
