@@ -26,7 +26,7 @@ function Header() {
     return (
         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
             <div className='flex-row'>
-                <img className='logo' src="./src/images/logo.png" alt="not found" />
+                <img className='logo' src="./public/Images/logo.png" alt="not found" />
                 <p className='logo-text'>Hepsibir Arada</p>
             </div>
             <div className='flex-row'>

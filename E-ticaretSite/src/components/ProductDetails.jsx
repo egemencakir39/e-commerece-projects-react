@@ -2,12 +2,20 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 import { setSelectedProduct } from '../redux/slices/productSlice';
+import '../css/ProductDetails.css'
+import ReactStars from "react-stars";
+import { store } from '../redux/store'
+
+
+
 function ProductDetails() {
+
     const { id } = useParams();
     const { products, selectedProduct } = useSelector((store) => store.product)
 
-    const { price, image, title, description } = selectedProduct;
+    const { price, image, title, description, rating } = selectedProduct;
     const dispatch = useDispatch();
+    if (!selectedProduct) return null;
 
     useEffect(() => {
         getSelectedProduct(id);
@@ -17,12 +25,38 @@ function ProductDetails() {
         products && products.map((product) => {
             if (product.id == id) {
                 dispatch(setSelectedProduct(product))
+                console.log(product)
             }
         })
     }
     return (
-        <div>
-            {title}
+        <div style={{ display: 'flex' }}>
+            <div className='ımg'>
+                <img src={image} alt="" />
+            </div>
+            <div className='Alltext'>
+                <div className='textArea'>
+                    <h3>{title}</h3>
+                    <div style={{ display: 'flex' }}>
+                        <ReactStars
+                            count={5}
+                            value={rating.rate}
+                            size={24}
+                            color2={'#ffd700'}
+                            color1={'#ddd'}
+                            edit={false}
+                        />
+                        <p style={{ marginTop: "6px", marginLeft: "9px" }}> {rating.rate}  {rating.count} Değerlendirme</p>
+
+                    </div>
+                    <p>{description}</p>
+                    <h4>{price} TL</h4>
+                </div>
+                <div className='btn'>
+                    <button>Sepete ekle</button>
+
+                </div>
+            </div>
         </div>
     )
 }
