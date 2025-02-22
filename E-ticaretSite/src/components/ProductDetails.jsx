@@ -5,6 +5,7 @@ import { setSelectedProduct } from '../redux/slices/productSlice';
 import '../css/ProductDetails.css'
 import ReactStars from "react-stars";
 import { store } from '../redux/store'
+import { addToBasket } from '../redux/slices/basketSlice';
 
 
 
@@ -16,6 +17,20 @@ function ProductDetails() {
     const { price, image, title, description, rating } = selectedProduct;
     const dispatch = useDispatch();
     if (!selectedProduct) return null;
+    const count = 1;
+
+    const addBasket = () => {
+        const payload = {
+            id,
+            price,
+            image,
+            title,
+            description,
+            count,
+        }
+        dispatch(addToBasket(payload))
+
+    }
 
     useEffect(() => {
         getSelectedProduct(id);
@@ -25,7 +40,6 @@ function ProductDetails() {
         products && products.map((product) => {
             if (product.id == id) {
                 dispatch(setSelectedProduct(product))
-                console.log(product)
             }
         })
     }
@@ -53,7 +67,7 @@ function ProductDetails() {
                     <h4>{price} TL</h4>
                 </div>
                 <div className='btn'>
-                    <button>Sepete ekle</button>
+                    <button onClick={addBasket} >Sepete ekle</button>
 
                 </div>
             </div>

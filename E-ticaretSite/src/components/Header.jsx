@@ -5,11 +5,19 @@ import { CiLight } from "react-icons/ci";
 import { MdNightlightRound } from "react-icons/md";
 import { useState } from 'react';
 import Marque from './Marque';
+import Badge from '@mui/material/Badge';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDrawer } from '../redux/slices/basketSlice';
+
+
 
 
 function Header() {
 
     const [theme, setTheme] = useState(false);
+
+    const { basketProducts } = useSelector((store) => store.basket);
+    const dispatch = useDispatch();
 
     const changeTheme = () => {
         const root = document.getElementById("root")
@@ -26,7 +34,7 @@ function Header() {
     return (
         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
             <div className='flex-row'>
-                <img className='logo' src="./public/Images/logo.png" alt="not found" />
+                <img className='logo' src="./Images/logo.png" alt="not found" />
                 <p className='logo-text'>Hepsibir Arada</p>
             </div>
             <div className='flex-row'>
@@ -34,9 +42,12 @@ function Header() {
             </div>
             <div className='flex-row'>
                 {theme ? <MdNightlightRound className='icon' onClick={changeTheme} /> : <CiLight className='icon' onClick={changeTheme} />}
-                <FaBasketShopping className='icon' />
+                <Badge onClick={() => dispatch(setDrawer())} badgeContent={basketProducts.length} color='error'>
+                    <FaBasketShopping style={{ marginRight: '3px' }} className='icon' />
+                </Badge>
                 <span className='basket-text'>Sepet</span>
             </div>
+
         </div>
     )
 }

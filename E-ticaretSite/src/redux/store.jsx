@@ -4,6 +4,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import { combineReducers } from 'redux';
 import appReducer from './slices/appSlice.jsx';
 import productReducer from './slices/productSlice.jsx';
+import basketReducer from './slices/basketSlice.jsx'
 
 const persistConfig = {
     key: 'root',
@@ -12,11 +13,13 @@ const persistConfig = {
 
 const persistedAppReducer = persistReducer(persistConfig, appReducer);
 const persistedProductReducer = persistReducer(persistConfig, productReducer);
+const persistedBasketReducer = persistReducer(persistConfig, basketReducer);
 
 export const store = configureStore({
     reducer: {
         app: persistedAppReducer,
-        product: persistedProductReducer
+        product: persistedProductReducer,
+        basket: persistedBasketReducer
     }
 });
 
