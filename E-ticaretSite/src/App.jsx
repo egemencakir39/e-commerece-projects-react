@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import PageContainer from './container/PageContainer'
 import Header from './components/Header'
@@ -12,14 +12,22 @@ import { BrowserRouter } from 'react-router'
 import Drawer from '@mui/material/Drawer';
 import { useDispatch, useSelector } from 'react-redux'
 import { store } from './redux/store'
-import { setDrawer } from './redux/slices/basketSlice'
+import { removeFromBasket, setDrawer, totalPrice } from './redux/slices/basketSlice'
 
 
 function App() {
 
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(totalPrice());
+  }, [])
 
-  const { basketProducts, drawer } = useSelector((store) => store.basket)
+  const removeItem = (id) => {
+    dispatch(removeFromBasket(id));
+    dispatch(totalPrice());
+  }
+
+  const { basketProducts, drawer, total } = useSelector((store) => store.basket)
   return (
     <div>
       <BrowserRouter>
@@ -35,12 +43,15 @@ function App() {
                     <img style={{ marginRight: '5px' }} src={product.image} width={60} height={70} />
                     <p style={{ width: '400px' }} >{product.title} ({product.count})</p>
                     <p style={{ fontWeight: 'bold', width: '60px' }} >{product.price}</p>
-                    <button style={{ margin: '10px' }} >Sil</button>
+                    <button onClick={() => removeItem(product.id)} style={{ margin: '10px' }} >Sil</button>
                   </div>
                 )
               })
 
             }
+            <div>
+              <h3>Toplam Tutar:{total}</h3>
+            </div>
           </Drawer>
         </PageContainer>
       </BrowserRouter>

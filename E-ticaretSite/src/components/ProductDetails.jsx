@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 import { setSelectedProduct } from '../redux/slices/productSlice';
 import '../css/ProductDetails.css'
 import ReactStars from "react-stars";
 import { store } from '../redux/store'
-import { addToBasket } from '../redux/slices/basketSlice';
+import { addToBasket, totalPrice } from '../redux/slices/basketSlice';
 
 
 
@@ -17,7 +17,7 @@ function ProductDetails() {
     const { price, image, title, description, rating } = selectedProduct;
     const dispatch = useDispatch();
     if (!selectedProduct) return null;
-    const count = 1;
+    const [count, setCount] = useState(1);
 
     const addBasket = () => {
         const payload = {
@@ -29,7 +29,14 @@ function ProductDetails() {
             count,
         }
         dispatch(addToBasket(payload))
+        dispatch(totalPrice())
 
+    }
+    const countPlus = () => {
+        setCount(count + 1)
+    }
+    const countDec = () => {
+        setCount(count - 1)
     }
 
     useEffect(() => {
@@ -68,7 +75,11 @@ function ProductDetails() {
                 </div>
                 <div className='btn'>
                     <button onClick={addBasket} >Sepete ekle</button>
-
+                </div>
+                <div className='flex-row'>
+                    <button onClick={countPlus} >+</button>
+                    <p>{count}</p>
+                    <button onClick={countDec} >-</button>
                 </div>
             </div>
         </div>

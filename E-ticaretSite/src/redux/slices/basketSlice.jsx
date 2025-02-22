@@ -9,6 +9,8 @@ const getBasketFromStorage = () => {
 const initialState = {
     basketProducts: getBasketFromStorage(),
     drawer: false,
+    total: 0,
+
 }
 
 const writeFromBasketToStorage = (basket) => {
@@ -23,8 +25,8 @@ export const basketSlice = createSlice({
             const findProduct = state.basketProducts && state.basketProducts.find((product) => product.id === action.payload.id);
             if (findProduct) {
                 const extractedProducts = state.basketProducts.filter((product) => product.id != action.payload.id);
-                findProduct.count += action.payload.count;
-                state.basketProducts = [...extractedProducts, findProduct];
+                const updatedProduct = { ...findProduct, count: findProduct.count + action.payload.count };
+                state.basketProducts = [...extractedProducts, updatedProduct];
                 writeFromBasketToStorage(state.basketProducts);
 
             } else {
@@ -35,12 +37,20 @@ export const basketSlice = createSlice({
         },
         setDrawer: (state) => {
             state.drawer = !state.drawer;
+        },
+        totalPrice: (state) => {
+            state.total = state.basketProducts.reduce((acc, product) => acc + product.price * product.count, 0);
+        },
+        removeFromBasket: (state, action) => {
+            state.basketProducts = state.basketProducts.filter((product) => product.id !== action.payload);
+
+            writeFromBasketToStorage(state.basketProducts);
         }
 
     }
 
 })
 
-export const { addToBasket, setDrawer } = basketSlice.actions
+export const { addToBasket, setDrawer, totalPrice, removeFromBasket } = basketSlice.actions
 
 export default basketSlice.reducer
